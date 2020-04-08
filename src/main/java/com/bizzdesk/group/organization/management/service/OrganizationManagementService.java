@@ -13,8 +13,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -159,5 +157,12 @@ public class OrganizationManagementService {
                 .setPercentageRetention(organizationHelper.getPercentageRetention())
                 .setRetention(organizationHelper.isRetention());
         organizationRepository.save(organization);
+    }
+
+    public OrganizationHelperResponse getOrganization(Long organizationId) throws GoTaxException {
+        Organization organization = organizationRepository.findById(organizationId).orElseThrow(
+                () -> new GoTaxException(MessageFormat.format("Organization With Id {0} Does Not Exist", organizationId))
+        );
+        return MapperModel.mapOrganizationToHelper(organization);
     }
 }

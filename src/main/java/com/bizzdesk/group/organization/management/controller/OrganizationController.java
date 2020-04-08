@@ -72,4 +72,9 @@ public class OrganizationController {
     public void updateOrganization(@RequestParam("organizationId") Long organizationId, @RequestBody OrganizationHelperRequest organizationHelper) throws GoTaxException {
         organizationManagementService.updateOrganization(organizationId, organizationHelper);
     }
+
+    @GetMapping("/v1/organization/id")
+    public OrganizationHelperResponse getOrganizationById(@RequestParam("organizationId") Long organizationId) throws GoTaxException {
+        return organizationManagementService.getOrganization(organizationId);
+    }
 }
